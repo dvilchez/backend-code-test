@@ -2,6 +2,7 @@ import bodyParser from "body-parser";
 import compression from "compression";
 import express from "express";
 import lusca from "lusca";
+import { registerRoutes } from "./routes";
 
 // Controllers (route handlers)
 import * as healthController from "./controllers/health";
@@ -18,6 +19,7 @@ app.use(lusca.xframe("SAMEORIGIN"));
 app.use(lusca.xssProtection(true));
 
 // Primary app routes
+registerRoutes(app);
 app.get("/", healthController.check);
 
 export default app;
