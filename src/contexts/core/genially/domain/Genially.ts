@@ -1,3 +1,5 @@
+import IncorrectGeniallyNameValue from "./IncorrectGeniallyNameValue";
+
 export default class Genially {
   private _id: string;
   private _name: string;
@@ -7,6 +9,8 @@ export default class Genially {
   private _deletedAt: Date;
 
   constructor(id: string, name: string, description?: string) {
+    if(!name || name.length < 3 || name.length > 20) throw new IncorrectGeniallyNameValue(name);
+
     this._id = id;
     this._name = name;
     this._description = description;

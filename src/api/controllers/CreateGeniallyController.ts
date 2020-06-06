@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
 import CreateGeniallyService from "../../contexts/core/genially/application/CreateGeniallyService";
+import IncorrectGeniallyNameValue from "../../contexts/core/genially/domain/IncorrectGeniallyNameValue";
 
 export default class CreateGeniallyController {
   constructor(private createGenially: CreateGeniallyService) {}
@@ -13,7 +14,11 @@ export default class CreateGeniallyController {
     try {
       await this.createGenially.execute({ id, name, description });
     } catch (error) {
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).json(error);
+      if (error instanceof IncorrectGeniallyNameValue) {
+        res.status(httpStatus.BAD_REQUEST).json({ message: error.message });
+      } else {
+        res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: error.message });
+      }
     }
 
     res.status(httpStatus.CREATED).send();
