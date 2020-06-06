@@ -1,5 +1,6 @@
 import Genially from "../../src/contexts/core/genially/domain/Genially";
 import IncorrectGeniallyNameValue from "../../src/contexts/core/genially/domain/IncorrectGeniallyNameValue";
+import IncorrectGeniallyDescriptionValue from "../../src/contexts/core/genially/domain/IncorrectGeniallyDescriptionValue";
 
 describe("Genially invariant", () => {
   describe("name must have a value with length from 3 to 20", () => {
@@ -9,5 +10,11 @@ describe("Genially invariant", () => {
         expect(() => new Genially("id", name)).toThrow(IncorrectGeniallyNameValue);
       }
     );
+  });
+
+  describe("description length must be shorter than 125 characters", () => {
+    it("should return a bad request status", async () => {
+        expect(() => new Genially("id", "name", "d".repeat(126))).toThrow(IncorrectGeniallyDescriptionValue);
+    });
   });
 });

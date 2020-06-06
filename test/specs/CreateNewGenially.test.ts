@@ -21,6 +21,7 @@ describe("Create new genially", () => {
       },
     };
    repository.save.mockClear();
+   response.status.mockClear();
   });
 
   it("should create a new genially on the persistence layer", async () => {
@@ -47,5 +48,12 @@ describe("Create new genially", () => {
     );
   });
 
-  describe("Create new genially invalid description", () => {});
+  describe("description length must be shorter than 125 characters", () => {
+    it("should return a bad request status", async () => {
+      req = { body: {...req.body, description: "d".repeat(126) }};
+      await createGeniallyController.run(req, response);
+
+      expect(response.status).toHaveBeenCalledWith(httpStatus.BAD_REQUEST);
+    });
+  });
 });
