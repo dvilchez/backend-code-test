@@ -6,32 +6,25 @@ describe("CreateGeniallyService", () => {
     find: jest.fn(),
     delete: jest.fn(),
   };
+  const newGenially = {
+    id: "id",
+    name: "name",
+    description: "description",
+  };
 
   beforeEach(() => {
     repository.save.mockClear();
   });
 
   it("should create a new genially on the persistence layer", async () => {
-    await new CreateGeniallyService(repository).execute({
-      id: "id",
-      name: "name",
-      description: "description",
-    });
+    await new CreateGeniallyService(repository).execute(newGenially);
 
     expect(repository.save).toHaveBeenCalled();
   });
 
   it("should return the created genially", async () => {
-    const genially = await new CreateGeniallyService(repository).execute({
-      id: "id",
-      name: "name",
-      description: "description",
-    });
+    const genially = await new CreateGeniallyService(repository).execute(newGenially);
 
-    expect(genially).toMatchObject({
-      id: "id",
-      name: "name",
-      description: "description",
-    });
+    expect(genially).toMatchObject(genially);
   });
 });

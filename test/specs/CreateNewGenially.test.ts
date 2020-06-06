@@ -16,6 +16,7 @@ describe("Create new genially", () => {
   beforeEach(() => {
     req = {
       body: {
+        id: "id",
         name: "name",
         description: "description",
       },
