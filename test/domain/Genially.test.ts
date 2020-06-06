@@ -37,3 +37,12 @@ describe("rename", () => {
     expect(genially.modifiedAt).toEqual(expect.any(Date));
   });
 });
+
+describe("delete", () => {
+  const genially = new Genially("id", "name");
+  it("should update the delation date", () => {
+    genially.delete();
+
+    expect(genially.deletedAt).toEqual(expect.any(Date));
+  });
+});

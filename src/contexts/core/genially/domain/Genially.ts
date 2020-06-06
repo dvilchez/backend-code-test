@@ -28,6 +28,12 @@ export default class Genially {
     return this;
   }
 
+  delete(): Genially {
+    this._deletedAt = new Date();
+
+    return this;
+  }
+
   get id(): string {
     return this._id;
   }
